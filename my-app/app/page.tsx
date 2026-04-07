@@ -53,7 +53,7 @@ const PACKAGES: Package[] = [
     duration: "5 Nights",
     tag: "Hot Deal",
     flag: "🇪🇬",
-    image: "/images/egypt.jpg",
+    image: "egypt.jpg",
     // 📸 Upload: Giza Pyramids at golden hour — wide aerial shot
     highlights: ["Giza Pyramids & The Sphinx", "Quad biking & Camel ride", "Ras Mohammed snorkeling", "Bedouin Dinner experience"],
     includes: ["Return flights", "2N Cairo + 3N Sharm hotel", "Visa on arrival", "Airport transfers", "All listed tours"],
@@ -67,7 +67,7 @@ const PACKAGES: Package[] = [
     duration: "4 Nights",
     tag: "Best Value",
     flag: "🇰🇪",
-    image: "/images/mombasa.jpg",
+    image: "mombasa.jpg",
     // 📸 Upload: Mombasa beach resort, turquoise ocean, white sand
     highlights: ["4 Nights beach resort", "Haller Park wildlife tour", "Wasini Island tour", "Dhow boat ride"],
     includes: ["Economy return ticket", "Beach resort B&D", "Airport transfers", "All listed tours"],
@@ -81,7 +81,7 @@ const PACKAGES: Package[] = [
     duration: "4 Nights",
     tag: "Most Popular",
     flag: "🇸🇨",
-    image: "/images/seychelles.jpg",
+    image: "seychelles.jpg",
     // 📸 Upload: Seychelles granite boulders + turquoise water (Anse Source d'Argent)
     highlights: ["4 Nights beach resort", "Marine tour & boat ride", "Fish feeding experience", "Seychelles eTA included"],
     includes: ["Economy return ticket", "Beach resort B&B", "eTA", "Airport transfers"],
@@ -95,7 +95,7 @@ const PACKAGES: Package[] = [
     duration: "5 Nights",
     tag: "Budget Pick",
     flag: "🇶🇦",
-    image: "/images/qatar.jpg",
+    image: "qatar.jpg",
     // 📸 Upload: Doha skyline at night OR desert safari golden dunes
     highlights: ["Villagio Mall Gondola ride", "Museum of Illusions", "Half-day Desert Safari", "Qatar Visa included"],
     includes: ["Economy return ticket", "5N hotel B&B", "Qatar Visa", "Airport transfers"],
@@ -109,7 +109,7 @@ const PACKAGES: Package[] = [
     duration: "4 Nights",
     tag: "New",
     flag: "🇹🇿",
-    image: "/images/zanzibar.jpg",
+    image: "zanzibar.jpg",
     // 📸 Upload: Zanzibar dhow boats on turquoise water or Stone Town alley
     highlights: ["Swimming with turtles", "Stone Town & Prison Island", "Mnemba Island", "Kayaking"],
     includes: ["Economy return ticket", "Beach resort B&D", "Tanzanian Visa", "Airport transfers"],
@@ -123,7 +123,7 @@ const PACKAGES: Package[] = [
     duration: "4 Nights",
     tag: "Adventure",
     flag: "🇱🇧",
-    image: "/images/beirut.jpg",
+    image: "beirut.jpg",
     // 📸 Upload: Lebanese cedar mountains with snow OR Jeita Grotto
     highlights: ["Snowmobile & Paragliding", "Cable car ride", "Jeita Grotto boat ride", "Harissa visit"],
     includes: ["Economy return ticket", "4N hotel B&B", "Airport transfers", "All listed activities"],
