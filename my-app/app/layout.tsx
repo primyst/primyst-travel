@@ -35,7 +35,7 @@ export default function RootLayout({
         <div className="fixed top-0 left-0 w-full z-[60] bg-[#005B82] text-white text-center py-2 px-4 text-[11px] tracking-wide">
           <span className="font-medium">Concept Preview</span>
           <span className="mx-2 opacity-50">·</span>
-          Independent redesign concept showcasing potential improvements. Not affiliated with Destination Royale Services.
+          Concept Preview • Sample design. Not affiliated with Destination Royale YET
         </div>
 
         {children}
