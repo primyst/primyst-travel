@@ -16,29 +16,30 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Destination Royale — Demo Preview",
-  description: "Unofficial demo. Not affiliated with Destination Royale Services.",
+  title: "Destination Royale — Concept Preview",
+  description:
+    "Independent redesign concept showcasing potential improvements. Not affiliated with Destination Royale Services.",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" className="scroll-smooth">
       <body
-        className={`${dmSans.variable} ${playfair.variable} antialiased font-sans bg-white text-slate-900`}
+        className={`${dmSans.variable} ${playfair.variable} antialiased font-sans bg-white text-slate-900 pt-8`}
       >
         {/* Demo Banner */}
-        <div className="w-full sticky top-0 z-50 bg-[#005B82] text-white text-center py-2 px-4 text-xs tracking-wide">
-          <span className="font-medium">Demo Preview</span>
+        <div className="fixed top-0 left-0 w-full z-[60] bg-[#005B82] text-white text-center py-2 px-4 text-[11px] tracking-wide">
+          <span className="font-medium">Concept Preview</span>
           <span className="mx-2 opacity-50">·</span>
-          This is an unofficial concept site. Not affiliated with Destination Royale Services. Will be taken down immediately upon request or if they decline.
+          Independent redesign concept showcasing potential improvements. Not affiliated with Destination Royale Services.
         </div>
 
         {children}
       </body>
     </html>
   );
-  }
+}
