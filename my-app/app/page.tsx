@@ -12,24 +12,18 @@ import {
   Users, BadgeCheck, Calendar, ArrowUpRight
 } from "lucide-react";
 
-// ── DATA ──────────────────────────────────────────────────────────────────────
-
-// UPDATED: pureQ T&T Contact Details - REPLACE WITH YOUR ACTUAL DETAILS
-const WA_NUMBER = "234XXXXXXXXXX";  // Replace with your WhatsApp number
-const WA_NUMBER_2 = "234XXXXXXXXXX"; // Replace with your second number (optional)
-const EMAIL = "hello@pureqtravels.com"; // Replace with your email
-const INSTAGRAM = "https://instagram.com/pureqtravels"; // Replace with your Instagram
+const WA_NUMBER = "234XXXXXXXXXX";
+const WA_NUMBER_2 = "234XXXXXXXXXX";
+const EMAIL = "hello@pureqtravels.com";
+const INSTAGRAM = "https://instagram.com/pureqtravels";
 const COMPANY_NAME = "pureQ T&T";
 const COMPANY_FULL_NAME = "pureQ Travel & Tours";
 const TAGLINE = "Your Journey, Our Passion";
 
-// Brand Colors - UPDATED for pureQ (fresh, modern teal/coral palette)
-const PRIMARY_COLOR = "#0D9488";     // Teal-600 - main brand color
-const PRIMARY_DARK = "#0F766E";      // Teal-700 - hover states
-const ACCENT_COLOR = "#F97316";      // Orange-500 - accents/CTAs
-const SECONDARY_COLOR = "#14B8A6";   // Teal-500 - secondary elements
-
-// Optimized WhatsApp opener with fallback
+const PRIMARY_COLOR = "#0D9488";
+const PRIMARY_DARK = "#0F766E";
+const ACCENT_COLOR = "#F97316";
+const SECONDARY_COLOR = "#14B8A6";
 const openWhatsApp = (msg: string) => {
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   if (typeof window !== 'undefined') {
@@ -60,7 +54,7 @@ export type Package = {
   spotsLeft?: number;
 };
 
-// UPDATED: Sample packages with generic content - REPLACE WITH YOUR ACTUAL PACKAGES
+
 const PACKAGES: Package[] = [
   {
     id: "dubai",
@@ -71,7 +65,7 @@ const PACKAGES: Package[] = [
     duration: "5 Nights",
     tag: "Hot Deal",
     flag: "🇦🇪",
-    image: "/images/dubai.jpg", // Update image paths
+    image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=80",
     spotsLeft: 4,
     highlights: ["Burj Khalifa visit", "Desert Safari", "Dhow Cruise Dinner", "Dubai Mall Tour"],
     includes: ["Return flights", "4-star hotel", "UAE Visa", "Airport transfers", "Daily breakfast"],
@@ -85,7 +79,7 @@ const PACKAGES: Package[] = [
     duration: "5 Nights",
     tag: "Most Popular",
     flag: "🇲🇻",
-    image: "/images/maldives.jpg",
+    image: "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=800&q=80",
     spotsLeft: 6,
     highlights: ["Overwater villa stay", "Snorkeling excursion", "Sunset dolphin cruise", "Spa treatment"],
     includes: ["Return flights", "Water villa", "Speedboat transfer", "All-inclusive meals"],
@@ -99,7 +93,7 @@ const PACKAGES: Package[] = [
     duration: "5 Nights",
     tag: "Best Value",
     flag: "🇸🇬",
-    image: "/images/singapore.jpg",
+    image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80",
     spotsLeft: 8,
     highlights: ["Marina Bay Sands", "Sentosa Island", "Gardens by the Bay", "Night Safari"],
     includes: ["Return flights", "Boutique hotel", "Singapore Visa", "Airport transfers", "City tour"],
@@ -113,7 +107,7 @@ const PACKAGES: Package[] = [
     duration: "7 Nights",
     tag: "Budget Pick",
     flag: "🇹🇭",
-    image: "/images/thailand.jpg",
+    image: "https://images.unsplash.com/photo-1510379872535-9310dc6fd6a7?auto=format&fit=crop&w=800&q=80",
     spotsLeft: 12,
     highlights: ["Grand Palace tour", "Phi Phi Islands", "Floating Market", "Thai cooking class"],
     includes: ["Return flights", "3N Bangkok + 4N Phuket", "Thai Visa", "All transfers"],
@@ -127,7 +121,7 @@ const PACKAGES: Package[] = [
     duration: "7 Nights",
     tag: "Adventure",
     flag: "🇿🇦",
-    image: "/images/southafrica.jpg",
+    image: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=800&q=80",
     spotsLeft: 5,
     highlights: ["Table Mountain", "Kruger Safari", "Cape Winelands", "Robben Island"],
     includes: ["Return flights", "4-star hotels", "SA Visa", "Safari tour", "All transfers"],
@@ -141,7 +135,7 @@ const PACKAGES: Package[] = [
     duration: "7 Nights",
     tag: "New",
     flag: "🇲🇦",
-    image: "/images/morocco.jpg",
+    image: "https://images.unsplash.com/photo-1569383746724-6f1b882b8f46?auto=format&fit=crop&w=800&q=80",
     spotsLeft: 3,
     highlights: ["Sahara Desert camp", "Marrakech medina", "Blue City Chefchaouen", "Atlas Mountains"],
     includes: ["Return flights", "Riad stays", "Morocco Visa", "Desert tour", "All transfers"],
