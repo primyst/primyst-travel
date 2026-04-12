@@ -1,29 +1,22 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import {
   Plane, Globe, Shield, Heart, Anchor, MapPin,
   Phone, Mail, Instagram, ArrowRight, Star,
-  Check, Menu, X, MessageCircle, Send, ChevronRight,
+  Check, Menu, X, MessageCircle, Send,
   Clock, FileText, Camera, Sparkles, TrendingUp,
   Users, BadgeCheck, Calendar, ArrowUpRight
 } from "lucide-react";
 
 const WA_NUMBER = "234XXXXXXXXXX";
-const WA_NUMBER_2 = "234XXXXXXXXXX";
 const EMAIL = "hello@pureqtravels.com";
 const INSTAGRAM = "https://instagram.com/pureqtravels";
-const COMPANY_NAME = "pureQ T&T";
-const COMPANY_FULL_NAME = "pureQ Travel & Tours";
-const TAGLINE = "Your Journey, Our Passion";
+const COMPANY_NAME = "PureQ";
 
-const PRIMARY_COLOR = "#0D9488";
-const PRIMARY_DARK = "#0F766E";
-const ACCENT_COLOR = "#F97316";
-const SECONDARY_COLOR = "#14B8A6";
 const openWhatsApp = (msg: string) => {
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   if (typeof window !== 'undefined') {
@@ -54,91 +47,90 @@ export type Package = {
   spotsLeft?: number;
 };
 
-
 const PACKAGES: Package[] = [
   {
-    id: "egypt",
-    title: "Egypt",
-    subtitle: "Cairo & Sharm El Sheikh",
-    price: "\u20a62,900,000",
-    dates: "Apr 24 \u2013 29",
+    id: "dubai",
+    title: "Dubai",
+    subtitle: "City of Gold Experience",
+    price: "₦1,850,000",
+    dates: "May 15 – 20",
     duration: "5 Nights",
     tag: "Hot Deal",
-    flag: "\ud83c\uddea\ud83c\uddec",
-    image: "egypt.jpg",
+    flag: "🇦🇪",
+    image: "https://images.unsplash.com/photo-1518684079-3c830dcef090?auto=format&fit=crop&w=800&q=80",
     spotsLeft: 4,
-    highlights: ["Giza Pyramids & The Sphinx", "Quad biking & Camel ride", "Ras Mohammed snorkeling", "Bedouin Dinner"],
-    includes: ["Return flights", "2N Cairo + 3N Sharm hotel", "Visa on arrival", "Airport transfers", "All tours"],
+    highlights: ["Burj Khalifa visit", "Desert Safari", "Dhow Cruise Dinner", "Dubai Mall Tour"],
+    includes: ["Return flights", "4-star hotel", "UAE Visa", "Airport transfers", "Daily breakfast"],
   },
   {
-    id: "mombasa",
-    title: "Mombasa",
-    subtitle: "Kenya Beach Escape",
-    price: "\u20a62,550,000",
-    dates: "Apr 23 \u2013 28",
-    duration: "4 Nights",
-    tag: "Best Value",
-    flag: "\ud83c\uddf0\ud83c\uddea",
-    image: "mombasa.jpg",
-    spotsLeft: 6,
-    highlights: ["4 Nights beach resort", "Haller Park wildlife", "Wasini Island tour", "Dhow boat ride"],
-    includes: ["Economy return ticket", "Beach resort B&D", "Airport transfers", "All tours"],
-  },
-  {
-    id: "seychelles",
-    title: "Seychelles",
-    subtitle: "Luxury Island Retreat",
-    price: "\u20a62,400,000",
-    dates: "Nov 9 \u2013 14",
-    duration: "4 Nights",
-    tag: "Most Popular",
-    flag: "\ud83c\uddf8\ud83c\udde8",
-    image: "seychelles.jpg",
-    spotsLeft: 8,
-    highlights: ["4 Nights beach resort", "Marine tour & boat ride", "Fish feeding", "Seychelles eTA included"],
-    includes: ["Economy return ticket", "Beach resort B&B", "eTA", "Airport transfers"],
-  },
-  {
-    id: "qatar",
-    title: "Qatar",
-    subtitle: "Super Budget 3.0",
-    price: "\u20a62,500,000",
-    dates: "Nov 20 \u2013 26",
+    id: "maldives",
+    title: "Maldives",
+    subtitle: "Island Paradise Escape",
+    price: "₦2,200,000",
+    dates: "Jun 10 – 15",
     duration: "5 Nights",
+    tag: "Most Popular",
+    flag: "🇲🇻",
+    image: "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?auto=format&fit=crop&w=800&q=80",
+    spotsLeft: 6,
+    highlights: ["Overwater villa stay", "Snorkeling excursion", "Sunset dolphin cruise", "Spa treatment"],
+    includes: ["Return flights", "Water villa", "Speedboat transfer", "All-inclusive meals"],
+  },
+  {
+    id: "singapore",
+    title: "Singapore",
+    subtitle: "Lion City Adventure",
+    price: "₦1,650,000",
+    dates: "Jul 5 – 10",
+    duration: "5 Nights",
+    tag: "Best Value",
+    flag: "🇸🇬",
+    image: "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80",
+    spotsLeft: 8,
+    highlights: ["Marina Bay Sands", "Sentosa Island", "Gardens by the Bay", "Night Safari"],
+    includes: ["Return flights", "Boutique hotel", "Singapore Visa", "Airport transfers", "City tour"],
+  },
+  {
+    id: "thailand",
+    title: "Thailand",
+    subtitle: "Bangkok & Phuket Combo",
+    price: "₦1,450,000",
+    dates: "Aug 12 – 19",
+    duration: "7 Nights",
     tag: "Budget Pick",
-    flag: "\ud83c\uddf6\ud83c\udde6",
-    image: "qatar.jpg",
+    flag: "🇹🇭",
+    image: "https://images.unsplash.com/photo-1510379872535-9310dc6fd6a7?auto=format&fit=crop&w=800&q=80",
     spotsLeft: 12,
-    highlights: ["Villagio Mall Gondola", "Museum of Illusions", "Desert Safari", "Qatar Visa included"],
-    includes: ["Economy return ticket", "5N hotel B&B", "Qatar Visa", "Airport transfers"],
+    highlights: ["Grand Palace tour", "Phi Phi Islands", "Floating Market", "Thai cooking class"],
+    includes: ["Return flights", "3N Bangkok + 4N Phuket", "Thai Visa", "All transfers"],
   },
   {
-    id: "zanzibar",
-    title: "Zanzibar",
-    subtitle: "Tanzania Beach & History",
-    price: "\u20a62,850,000",
-    dates: "Oct 24 \u2013 29",
-    duration: "4 Nights",
-    tag: "New",
-    flag: "\ud83c\uddf9\ud83c\uddff",
-    image: "zanzibar.jpg",
-    spotsLeft: 5,
-    highlights: ["Swim with turtles", "Stone Town & Prison Island", "Mnemba Island", "Kayaking"],
-    includes: ["Economy return ticket", "Beach resort B&D", "Tanzanian Visa", "Airport transfers"],
-  },
-  {
-    id: "beirut",
-    title: "Beirut",
-    subtitle: "Lebanon Winter Edition",
-    price: "\u20a62,600,000",
-    dates: "Mar 5 \u2013 10",
-    duration: "4 Nights",
+    id: "southafrica",
+    title: "South Africa",
+    subtitle: "Cape Town & Safari",
+    price: "₦2,100,000",
+    dates: "Sep 8 – 15",
+    duration: "7 Nights",
     tag: "Adventure",
-    flag: "\ud83c\uddf1\ud83c\udde7",
-    image: "beirut.jpg",
+    flag: "🇿🇦",
+    image: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=800&q=80",
+    spotsLeft: 5,
+    highlights: ["Table Mountain", "Kruger Safari", "Cape Winelands", "Robben Island"],
+    includes: ["Return flights", "4-star hotels", "SA Visa", "Safari tour", "All transfers"],
+  },
+  {
+    id: "morocco",
+    title: "Morocco",
+    subtitle: "Marrakech & Desert",
+    price: "₦1,750,000",
+    dates: "Oct 20 – 27",
+    duration: "7 Nights",
+    tag: "New",
+    flag: "🇲🇦",
+    image: "https://images.unsplash.com/photo-1569383746724-6f1b882b8f46?auto=format&fit=crop&w=800&q=80",
     spotsLeft: 3,
-    highlights: ["Snowmobile & Paragliding", "Cable car ride", "Jeita Grotto boat ride", "Harissa visit"],
-    includes: ["Economy return ticket", "4N hotel B&B", "Airport transfers", "All activities"],
+    highlights: ["Sahara Desert camp", "Marrakech medina", "Blue City Chefchaouen", "Atlas Mountains"],
+    includes: ["Return flights", "Riad stays", "Morocco Visa", "Desert tour", "All transfers"],
   },
 ];
 
@@ -160,25 +152,20 @@ const SERVICES = [
   { icon: Camera, label: "Travel Insurance", desc: "Comprehensive coverage for peace of mind", stat: "Global Cover" },
 ];
 
-// ── TEXT LOGO COMPONENT ──────────────────────────────────────────────────────
-
 function TextLogo({ className = "", size = "default" }: { className?: string; size?: "small" | "default" | "large" }) {
   const sizeClasses = {
     small: "text-lg",
-    default: "text-xl",
-    large: "text-2xl"
+    default: "text-2xl",
+    large: "text-3xl"
   };
   
   return (
-    <div className={`font-bold tracking-tight ${sizeClasses[size]} ${className}`}>
-      <span className="text-[#0D9488]">pure</span>
+    <div className={`font-black tracking-tight ${sizeClasses[size]} ${className}`}>
+      <span className="text-[#0D9488]">Pure</span>
       <span className="text-[#F97316]">Q</span>
-      <span className="text-gray-600 text-sm font-normal ml-1">T&T</span>
     </div>
   );
 }
-
-// ── AUTO-SLIDING INFINITE CAROUSEL ───────────────────────────────────────────
 
 function AutoSlidingCarousel({ onBook }: { onBook: (pkg: Package) => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -230,17 +217,26 @@ function AutoSlidingCarousel({ onBook }: { onBook: (pkg: Package) => void }) {
           >
             <div className="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group-hover:shadow-xl transition-shadow duration-300">
               <div className="relative h-48 overflow-hidden bg-slate-200">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0D9488]/20 to-[#14B8A6]/20 flex items-center justify-center text-[#0D9488]">
-                  <span className="text-4xl">{pkg.flag}</span>
-                </div>
+                <Image 
+                  src={pkg.image} 
+                  alt={pkg.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="288px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 
+                <div className="absolute top-3 left-3 text-3xl drop-shadow-lg">
+                  {pkg.flag}
+                </div>
+
                 {pkg.spotsLeft && pkg.spotsLeft <= 5 && (
                   <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full animate-pulse">
                     {pkg.spotsLeft} spots left
                   </div>
                 )}
 
-                <div className="absolute top-3 left-3">
+                <div className="absolute top-12 left-3">
                   <span className={`text-xs font-bold px-2.5 py-1 rounded-full text-white ${TAG_COLORS[pkg.tag] || "bg-[#0D9488]"}`}>
                     {pkg.tag}
                   </span>
@@ -248,7 +244,7 @@ function AutoSlidingCarousel({ onBook }: { onBook: (pkg: Package) => void }) {
 
                 <div className="absolute bottom-3 left-3 right-3">
                   <p className="text-white font-bold text-lg leading-tight drop-shadow-lg">{pkg.title}</p>
-                  <p className="text-white/90 text-xs mt-0.5 drop-shadow">{pkg.subtitle}</p>
+                  <p className="text-white/80 text-xs mt-0.5 drop-shadow">{pkg.subtitle}</p>
                 </div>
               </div>
 
@@ -282,8 +278,6 @@ function AutoSlidingCarousel({ onBook }: { onBook: (pkg: Package) => void }) {
     </div>
   );
 }
-
-// ── BOOKING MODAL ─────────────────────────────────────────────────────────────
 
 function BookingModal({ pkg, onClose }: { pkg: Package | null; onClose: () => void }) {
   const [step, setStep] = useState(1);
@@ -332,11 +326,22 @@ function BookingModal({ pkg, onClose }: { pkg: Package | null; onClose: () => vo
               />
             </div>
 
-            <div className="relative h-48 bg-gradient-to-br from-[#0D9488] to-[#14B8A6] flex items-center justify-center">
-              <span className="text-8xl">{pkg.flag}</span>
+            <div className="relative h-48 overflow-hidden">
+              <Image 
+                src={pkg.image} 
+                alt={pkg.title}
+                fill
+                className="object-cover"
+                sizes="448px"
+                priority
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
               <button onClick={onClose} className="absolute top-3 right-3 bg-white/20 hover:bg-white/40 backdrop-blur-sm rounded-full p-2 transition-colors">
                 <X size={16} className="text-white" />
               </button>
+              <div className="absolute top-3 left-3 text-4xl drop-shadow-lg">
+                {pkg.flag}
+              </div>
               <div className="absolute bottom-4 left-4">
                 <p className="text-white font-black text-2xl drop-shadow-lg">{pkg.title}</p>
                 <p className="text-white/90 text-sm drop-shadow">{pkg.subtitle}</p>
@@ -462,8 +467,6 @@ function BookingModal({ pkg, onClose }: { pkg: Package | null; onClose: () => vo
     </AnimatePresence>
   );
 }
-
-// ── ENHANCED CHAT WIDGET ─────────────────────────────────────────────────────
 
 type Msg = { from: "bot" | "user"; text: string; time?: string };
 
@@ -614,8 +617,6 @@ function ChatWidget() {
   );
 }
 
-// ── NAVBAR ────────────────────────────────────────────────────────────────────
-
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -631,7 +632,7 @@ function Navbar() {
       <header className={`fixed top-0 inset-x-0 z-40 transition-all duration-300 ${isScrolled ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100 py-2" : "bg-transparent py-4"}`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <TextLogo size="default" className={isScrolled ? "" : ""} />
+            <TextLogo size="default" />
           </Link>
 
           <nav className="hidden md:flex items-center gap-1">
@@ -696,8 +697,6 @@ function Navbar() {
     </>
   );
 }
-
-// ── HERO SECTION ─────────────────────────────────────────────────────────────
 
 function Hero({ onBook }: { onBook: (pkg: Package) => void }) {
   return (
@@ -798,17 +797,29 @@ function Hero({ onBook }: { onBook: (pkg: Package) => void }) {
                 onClick={() => onBook(pkg)}
               >
                 <div className="bg-white rounded-2xl overflow-hidden shadow-md border border-gray-100">
-                  <div className="relative h-40 bg-gradient-to-br from-[#0D9488]/20 to-[#14B8A6]/20 flex items-center justify-center">
-                    <span className="text-6xl">{pkg.flag}</span>
-                    <div className="absolute top-3 left-3">
+                  <div className="relative h-40 overflow-hidden">
+                    <Image 
+                      src={pkg.image} 
+                      alt={pkg.title}
+                      fill
+                      className="object-cover"
+                      sizes="288px"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute top-3 left-3 text-2xl drop-shadow-lg">
+                      {pkg.flag}
+                    </div>
+                    <div className="absolute top-3 right-3">
                       <span className={`text-xs font-bold px-2 py-1 rounded-full text-white ${TAG_COLORS[pkg.tag]}`}>
                         {pkg.tag}
                       </span>
                     </div>
+                    <div className="absolute bottom-3 left-3">
+                      <p className="font-bold text-white drop-shadow-lg">{pkg.title}</p>
+                    </div>
                   </div>
                   <div className="p-4">
-                    <p className="font-bold text-[#0D9488]">{pkg.title}</p>
-                    <p className="text-sm text-gray-500">{pkg.price}</p>
+                    <p className="font-bold text-[#0D9488]">{pkg.price}</p>
                   </div>
                 </div>
               </div>
@@ -819,8 +830,6 @@ function Hero({ onBook }: { onBook: (pkg: Package) => void }) {
     </section>
   );
 }
-
-// ── SERVICES SECTION ───────────────────────────────────────────────────────────
 
 function Services() {
   return (
@@ -862,8 +871,6 @@ function Services() {
   );
 }
 
-// ── PACKAGES GRID ─────────────────────────────────────────────────────────────
-
 function PackagesSection({ onBook }: { onBook: (pkg: Package) => void }) {
   return (
     <section id="packages" className="py-20 bg-white">
@@ -893,9 +900,19 @@ function PackagesSection({ onBook }: { onBook: (pkg: Package) => void }) {
               transition={{ delay: i * 0.1 }}
               className="group bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300"
             >
-              <div className="relative h-56 overflow-hidden bg-gradient-to-br from-[#0D9488]/20 to-[#14B8A6]/20 flex items-center justify-center">
-                <span className="text-8xl">{pkg.flag}</span>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+              <div className="relative h-56 overflow-hidden">
+                <Image 
+                  src={pkg.image} 
+                  alt={pkg.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                <div className="absolute top-3 left-3 text-3xl drop-shadow-lg">
+                  {pkg.flag}
+                </div>
 
                 {pkg.spotsLeft && pkg.spotsLeft <= 5 && (
                   <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 animate-pulse">
@@ -903,7 +920,7 @@ function PackagesSection({ onBook }: { onBook: (pkg: Package) => void }) {
                   </div>
                 )}
 
-                <div className="absolute top-3 left-3 flex items-center gap-2">
+                <div className="absolute top-16 left-3 flex items-center gap-2">
                   <span className={`text-xs font-bold px-2.5 py-1 rounded-full text-white ${TAG_COLORS[pkg.tag]}`}>
                     {pkg.tag}
                   </span>
@@ -971,8 +988,6 @@ function PackagesSection({ onBook }: { onBook: (pkg: Package) => void }) {
     </section>
   );
 }
-
-// ── VISA SECTION ─────────────────────────────────────────────────────────────
 
 function VisaSection() {
   return (
@@ -1049,8 +1064,6 @@ function VisaSection() {
   );
 }
 
-// ── WHY US / SOCIAL PROOF ───────────────────────────────────────────────────
-
 function WhyUs() {
   return (
     <section id="why-us" className="py-20 bg-white">
@@ -1119,8 +1132,6 @@ function WhyUs() {
   );
 }
 
-// ── CTA SECTION ───────────────────────────────────────────────────────────────
-
 function CTASection() {
   return (
     <section className="py-20 bg-[#0D9488] relative overflow-hidden">
@@ -1168,8 +1179,6 @@ function CTASection() {
     </section>
   );
 }
-
-// ── FOOTER ────────────────────────────────────────────────────────────────────
 
 function Footer() {
   return (
@@ -1236,8 +1245,6 @@ function Footer() {
     </footer>
   );
 }
-
-// ── MAIN PAGE ────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
   const [selectedPkg, setSelectedPkg] = useState<Package | null>(null);
