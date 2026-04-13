@@ -12,7 +12,7 @@ import {
   Users, BadgeCheck, Calendar, ArrowUpRight
 } from "lucide-react";
 
-const WA_NUMBER = "234XXXXXXXXXX";
+const WA_NUMBER = "2347035612652";
 const EMAIL = "hello@pureqtravels.com";
 const INSTAGRAM = "https://instagram.com/pureqtravels";
 const COMPANY_NAME = "PureQ";
