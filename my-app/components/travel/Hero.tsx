@@ -11,6 +11,71 @@ function openWhatsApp(message: string) {
   window.open(url, "_blank", "noopener,noreferrer");
 }
 
+function FlightRoute() {
+  return (
+    <div className="pointer-events-none absolute inset-0 z-[5] hidden sm:block">
+      <svg
+        viewBox="0 0 1200 720"
+        className="h-full w-full"
+        preserveAspectRatio="xMidYMid slice"
+      >
+        <defs>
+          <linearGradient id="routeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#5EEAD4" stopOpacity="0" />
+            <stop offset="15%" stopColor="#5EEAD4" stopOpacity="0.6" />
+            <stop offset="85%" stopColor="#5EEAD4" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#5EEAD4" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* dashed arc path */}
+        <path
+          id="flightPath"
+          d="M 150 480 Q 620 220 1050 380"
+          fill="none"
+          stroke="url(#routeGradient)"
+          strokeWidth="2"
+          strokeDasharray="6 10"
+          strokeLinecap="round"
+        />
+
+        {/* departure point */}
+        <circle cx="150" cy="480" r="4" fill="#5EEAD4">
+          <animate
+            attributeName="opacity"
+            values="0.4;1;0.4"
+            dur="2.5s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        {/* destination point */}
+        <circle cx="1050" cy="380" r="4" fill="#5EEAD4">
+          <animate
+            attributeName="opacity"
+            values="0.4;1;0.4"
+            dur="2.5s"
+            begin="1.2s"
+            repeatCount="indefinite"
+          />
+        </circle>
+
+        {/* plane traveling along the path */}
+        <g>
+          <animateMotion dur="6s" repeatCount="indefinite" rotate="auto">
+            <mpath href="#flightPath" />
+          </animateMotion>
+          <g transform="translate(-9,-9)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#5EEAD4">
+              <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2.5 1.5V22l4-1 4 1v-1.5L13 19v-5.5l8 2.5z" />
+            </svg>
+          </g>
+        </g>
+      </svg>
+    </div>
+  );
+}
+
 export default function Hero() {
   return (
     <section className="relative min-h-[720px] overflow-hidden bg-black">
@@ -33,6 +98,9 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/70" />
 
       <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-transparent to-black/20" />
+
+      {/* Flight route overlay */}
+      <FlightRoute />
 
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-[720px] max-w-6xl items-end px-4 pb-20 pt-32 sm:px-6 sm:pb-24">
@@ -88,7 +156,7 @@ export default function Hero() {
       {/* Bottom cinematic info */}
       <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/10 bg-black/20 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 text-xs text-white/60 sm:px-6">
-          <span>Curated journeys from Nigeria</span>
+          <span>Travel better. Start here.</span>
 
           <span className="hidden sm:block">
             Flights · Hotels · Visa · Experiences
@@ -97,4 +165,4 @@ export default function Hero() {
       </div>
     </section>
   );
-      }
+}
