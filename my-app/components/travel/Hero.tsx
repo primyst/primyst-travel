@@ -1,6 +1,100 @@
-import Image from "next/image";
-import { ArrowRight, Send } from "lucide-react";
-import FlightRoute from "./FlightRoute";
-import { COMPANY_NAME, openWhatsApp } from "./data";
+"use client";
 
-export default function Hero(){return <section className="relative min-h-[720px] overflow-hidden bg-[#071b20] pt-24 text-white"><Image src="/videos/flight.jpg" alt="View from an aircraft above the clouds" fill priority className="object-cover opacity-55" sizes="100vw"/><div className="absolute inset-0 bg-gradient-to-r from-[#061317]/95 via-[#061317]/55 to-transparent"/><div className="absolute inset-0 bg-gradient-to-t from-[#061317]/85 via-transparent to-[#061317]/20"/><div className="relative mx-auto flex min-h-[720px] max-w-6xl items-center px-4 py-20 sm:px-6"><div className="max-w-3xl"><div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] backdrop-blur-md"><span className="h-2 w-2 rounded-full bg-[#F97316]"/> Lagos · Nigeria</div><h1 className="text-5xl font-black leading-[0.96] tracking-tight sm:text-6xl lg:text-7xl">Your next trip,<br/>without the <span className="text-[#F97316]">runaround.</span></h1><p className="mt-6 max-w-xl text-lg leading-relaxed text-white/80 sm:text-xl">Flights, hotels, visas, transfers and the actual trip — put together before you have to figure out what comes next.</p><div className="mt-8 flex flex-col gap-3 sm:flex-row"><button onClick={()=>document.getElementById("packages")?.scrollIntoView({behavior:"smooth"})} className="flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 font-bold text-[#0D9488]">See upcoming trips <ArrowRight size={18}/></button><button onClick={()=>openWhatsApp(`Hi ${COMPANY_NAME}, I want help planning a trip.`)} className="flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 px-7 py-4 font-bold backdrop-blur-md"><Send size={18}/> Talk to a travel expert</button></div></div><div className="absolute bottom-8 right-4 hidden w-[380px] overflow-hidden rounded-3xl border border-white/20 bg-[#071b20]/55 p-5 shadow-2xl backdrop-blur-xl lg:block"><div className="flex items-start justify-between"><div><p className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/45">Your flight</p><p className="mt-1 text-lg font-black">Lagos → Cairo</p></div><div className="rounded-full border border-[#F97316]/30 bg-[#F97316]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#F97316]">QP 024</div></div><FlightRoute/><div className="mt-1 flex items-center justify-between border-t border-white/10 pt-3 text-[10px] text-white/45"><span>Departure · Lagos</span><span>Arrival · Cairo</span></div></div></div></section>}
+import { ArrowRight, Send, Plane } from "lucide-react";
+
+const WA_NUMBER = "2347035612652";
+const COMPANY_NAME = "PureQ";
+
+function openWhatsApp(message: string) {
+  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
+
+  window.open(url, "_blank", "noopener,noreferrer");
+}
+
+export default function Hero() {
+  return (
+    <section className="relative min-h-[720px] overflow-hidden bg-black">
+      {/* VIDEO BACKGROUND */}
+      <video
+        className="absolute inset-0 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        poster="/images/travel-poster.jpg"
+      >
+        <source src="/videos/luxury.mp4" type="video/mp4" />
+      </video>
+
+      {/* Cinematic overlays */}
+      <div className="absolute inset-0 bg-black/35" />
+
+      <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/70" />
+
+      <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-transparent to-black/20" />
+
+      {/* Content */}
+      <div className="relative z-10 mx-auto flex min-h-[720px] max-w-6xl items-end px-4 pb-20 pt-32 sm:px-6 sm:pb-24">
+        <div className="max-w-3xl text-white">
+          {/* Small travel indicator */}
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-black/20 px-4 py-2 text-xs font-medium text-white/80 backdrop-blur-md">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-white text-black">
+              <Plane size={11} />
+            </span>
+
+            Your journey starts here
+          </div>
+
+          <h1 className="text-5xl font-black leading-[0.95] tracking-tight sm:text-6xl lg:text-8xl">
+            Go somewhere
+            <br />
+            <span className="text-[#5EEAD4]">worth remembering.</span>
+          </h1>
+
+          <p className="mt-7 max-w-xl text-base leading-7 text-white/80 sm:text-lg">
+            Flights, stays, visas and unforgettable experiences — planned
+            around the trip you actually want.
+          </p>
+
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <button
+              onClick={() =>
+                document
+                  .getElementById("packages")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-[#0D9488] px-7 py-4 text-sm font-bold text-white transition hover:bg-[#0F766E]"
+            >
+              Explore trips
+              <ArrowRight size={17} />
+            </button>
+
+            <button
+              onClick={() =>
+                openWhatsApp(
+                  `Hi ${COMPANY_NAME}, I'd like to plan my next trip.`
+                )
+              }
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 bg-white/10 px-7 py-4 text-sm font-bold text-white backdrop-blur-md transition hover:bg-white/20"
+            >
+              <Send size={16} />
+              Talk to an expert
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom cinematic info */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-white/10 bg-black/20 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 text-xs text-white/60 sm:px-6">
+          <span>Curated journeys from Nigeria</span>
+
+          <span className="hidden sm:block">
+            Flights · Hotels · Visa · Experiences
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+      }
