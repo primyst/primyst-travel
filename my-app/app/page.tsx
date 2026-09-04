@@ -290,7 +290,7 @@ export default function Home() {
       <section id="destinations" className="scroll-mt-24 px-6 py-24 md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-16 max-w-7xl">
           <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#181611]/40">
-            01 / Destinations
+            Destinations
           </p>
           <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
             Where will you go?
@@ -339,7 +339,7 @@ export default function Home() {
       <section id="packages" className="scroll-mt-24 bg-[#c9603f] px-6 py-24 text-[#f4f1e9] md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-14 max-w-7xl">
           <p className="mb-3 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/60">
-            02 / Featured journeys
+            Featured journeys
           </p>
           <h2 className="max-w-2xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
             Journeys, already imagined.
@@ -386,7 +386,7 @@ export default function Home() {
       <section id="process" className="scroll-mt-24 px-6 py-24 md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-14 max-w-7xl">
           <p className="mb-3 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#181611]/40">
-            03 / How it works
+            How it works
           </p>
           <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
             You choose where. We handle the rest.
@@ -428,7 +428,7 @@ export default function Home() {
       <section id="events" className="scroll-mt-24 bg-[#4a4a35] px-6 py-24 text-[#f4f1e9] md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-12 max-w-7xl">
           <p className="mb-3 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/55">
-            04 / Events
+            Events
           </p>
           <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
             Travel has a social side.
@@ -470,7 +470,7 @@ export default function Home() {
       <section id="journal" className="scroll-mt-24 px-6 py-24 md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-14 max-w-7xl">
           <p className="mb-3 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#181611]/40">
-            05 / Journal
+            Journal
           </p>
           <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
             Stories for the road.
@@ -514,7 +514,7 @@ export default function Home() {
           className="relative z-10 flex min-h-[60svh] flex-col justify-center px-6 py-16 md:px-10"
         >
           <p className="mb-4 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/50">
-            06 / Your next chapter
+            Your next chapter
           </p>
           <h2 className="max-w-4xl font-serif text-5xl font-medium leading-[0.9] tracking-tight md:text-8xl">
             Where will you go next?
