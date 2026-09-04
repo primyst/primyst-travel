@@ -37,6 +37,20 @@ const destinations = [
     image:
       "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1200&q=85",
   },
+  {
+    slug: "bali",
+    name: "Bali",
+    country: "Indonesia",
+    image:
+      "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=1200&q=85",
+  },
+  {
+    slug: "santorini",
+    name: "Santorini",
+    country: "Greece",
+    image:
+      "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?auto=format&fit=crop&w=1200&q=85",
+  },
 ];
 
 const packages = [
@@ -137,20 +151,11 @@ const fadeUp = {
 
 function ScrollNav() {
   const { scrollY } = useScroll();
-  const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
-  const [lastY, setLastY] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (y) => {
     setSolid(y > 80);
-    if (y < 80) {
-      setHidden(false);
-    } else if (y > lastY + 4) {
-      setHidden(true);
-    } else if (y < lastY - 4) {
-      setHidden(false);
-    }
-    setLastY(y);
   });
 
   const navLinks = [
@@ -162,51 +167,96 @@ function ScrollNav() {
   ];
 
   return (
-    <motion.nav
-      animate={{ y: hidden ? "-120%" : "0%" }}
-      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+    <nav
       className={`fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-4 transition-colors duration-500 md:px-10 ${
         solid
-          ? "border-b border-[#181611]/10 bg-[#f4f1e9]/85 backdrop-blur-md"
-          : "bg-transparent"
+          ? "border-b border-[#181611]/10 bg-[#f4f1e9]/90 backdrop-blur-md"
+          : "bg-[#181611]/10 backdrop-blur-sm"
       }`}
     >
       <Link
         href="/"
-        className={`font-mono text-[13px] tracking-tight transition-colors ${
+        className={`text-[14px] font-semibold tracking-tight transition-colors ${
           solid ? "text-[#181611]" : "text-[#181611] md:text-white"
         }`}
       >
         TRAVELQ
       </Link>
 
+      {/* Desktop menu — always visible, consistent styling regardless of scroll */}
       <div
-        className={`hidden items-center gap-8 font-mono text-[11px] uppercase tracking-[0.15em] transition-colors md:flex ${
-          solid ? "text-[#181611]/60" : "text-white/75"
+        className={`hidden items-center gap-8 text-[11px] font-medium uppercase tracking-[0.15em] transition-colors md:flex ${
+          solid ? "text-[#181611]/65" : "text-white/80"
         }`}
       >
         {navLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
-            className="relative transition-opacity hover:opacity-70"
+            className="transition-opacity hover:opacity-70"
           >
             {link.label}
           </Link>
         ))}
       </div>
 
-      <Link
-        href="/contact"
-        className={`rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] transition ${
-          solid
-            ? "border-[#181611]/30 text-[#181611] hover:bg-[#181611] hover:text-[#f4f1e9]"
-            : "border-white/40 text-white hover:bg-white hover:text-black"
-        }`}
+      <div className="flex items-center gap-3">
+        <Link
+          href="/contact"
+          className={`hidden rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] transition sm:inline-block ${
+            solid
+              ? "border-[#181611]/30 text-[#181611] hover:bg-[#181611] hover:text-[#f4f1e9]"
+              : "border-white/40 text-white hover:bg-white hover:text-black"
+          }`}
+        >
+          Contact
+        </Link>
+
+        {/* Mobile menu toggle — so small screens get more than just Contact */}
+        <button
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label="Toggle menu"
+          className={`flex h-9 w-9 items-center justify-center rounded-full border transition md:hidden ${
+            solid
+              ? "border-[#181611]/30 text-[#181611]"
+              : "border-white/40 text-white"
+          }`}
+        >
+          <div className="flex flex-col gap-[3px]">
+            <span className="h-[1.5px] w-4 bg-current" />
+            <span className="h-[1.5px] w-4 bg-current" />
+          </div>
+        </button>
+      </div>
+
+      {/* Mobile menu panel */}
+      <motion.div
+        initial={false}
+        animate={{ height: menuOpen ? "auto" : 0, opacity: menuOpen ? 1 : 0 }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        className="absolute left-0 right-0 top-full overflow-hidden border-b border-[#181611]/10 bg-[#f4f1e9] md:hidden"
       >
-        Contact
-      </Link>
-    </motion.nav>
+        <div className="flex flex-col gap-1 px-6 py-4">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="py-2 text-[13px] font-medium uppercase tracking-[0.1em] text-[#181611]/75"
+            >
+              {link.label}
+            </Link>
+          ))}
+          <Link
+            href="/contact"
+            onClick={() => setMenuOpen(false)}
+            className="mt-2 w-fit rounded-full bg-[#181611] px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#f4f1e9]"
+          >
+            Contact
+          </Link>
+        </div>
+      </motion.div>
+    </nav>
   );
 }
 
@@ -227,7 +277,7 @@ export default function Home() {
             href={`#${s.id}`}
             className="group flex items-center gap-2 text-[10px] uppercase tracking-[0.15em] text-[#181611]/40 transition hover:text-[#181611]"
           >
-            <span className="hidden font-mono group-hover:inline">{s.label}</span>
+            <span className="hidden font-sans font-semibold group-hover:inline">{s.label}</span>
             <span className="flex h-2 w-2 items-center justify-center">
               <span className="h-1.5 w-1.5 rounded-full bg-[#181611]/30 transition group-hover:scale-150 group-hover:bg-[#c9603f]" />
             </span>
@@ -245,7 +295,7 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-5 font-mono text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/50"
+            className="mb-5 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/50"
           >
             Curated journeys / est. 2019
           </motion.p>
@@ -332,7 +382,7 @@ export default function Home() {
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 22, ease: "linear", repeat: Infinity }}
-          className="flex w-max gap-10 font-mono text-[12px] uppercase tracking-[0.2em] text-[#181611]/45"
+          className="flex w-max gap-10 font-sans font-semibold text-[12px] uppercase tracking-[0.2em] text-[#181611]/45"
         >
           {Array.from({ length: 2 }).map((_, i) => (
             <div key={i} className="flex gap-10">
@@ -352,11 +402,11 @@ export default function Home() {
       </div>
 
       {/* ---------------------------------------------------------- */}
-      {/* DESTINATIONS — rotated, overlapping tiles, not a clean grid */}
+      {/* DESTINATIONS — 6 tiles, tilted for character, packed in a clean grid */}
       {/* ---------------------------------------------------------- */}
       <section id="destinations" className="scroll-mt-24 px-6 py-24 md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-16 max-w-7xl">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[#181611]/40">
+          <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#181611]/40">
             01 / Destinations
           </p>
           <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
@@ -364,20 +414,20 @@ export default function Home() {
           </h2>
         </motion.div>
 
-        <div className="relative mx-auto flex max-w-7xl flex-wrap justify-center gap-x-4 gap-y-16 pb-10 md:justify-start md:gap-x-6">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-20 sm:grid-cols-3 md:gap-x-8">
           {destinations.map((d, i) => {
-            const rotations = [-3, 2, -2, 3];
+            const rotations = [-3, 2, -2, 3, -2, 2];
             return (
               <motion.div
                 key={d.slug}
                 initial={{ opacity: 0, y: 30, rotate: 0 }}
                 whileInView={{ opacity: 1, y: 0, rotate: rotations[i] }}
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.7, delay: i * 0.08, ease }}
-                className="group relative"
+                transition={{ duration: 0.7, delay: i * 0.06, ease }}
+                className="group relative mx-auto w-full max-w-[260px]"
               >
                 <Link href={`/destinations/${d.slug}`} className="block">
-                  <div className="h-[300px] w-[220px] overflow-hidden shadow-xl md:h-[360px] md:w-[260px]">
+                  <div className="aspect-[3/4] w-full overflow-hidden shadow-xl">
                     <img
                       src={d.image}
                       alt={`${d.name}, ${d.country}`}
@@ -388,7 +438,7 @@ export default function Home() {
                     className="absolute -bottom-6 left-4 rounded-lg bg-[#181611] px-3 py-2 text-[#f4f1e9] shadow-lg"
                     style={{ transform: `rotate(${-rotations[i]}deg)` }}
                   >
-                    <p className="font-mono text-[9px] uppercase tracking-wide text-[#f4f1e9]/50">
+                    <p className="text-[9px] font-medium uppercase tracking-wide text-[#f4f1e9]/50">
                       {d.country}
                     </p>
                     <p className="font-serif text-[16px] leading-tight">{d.name}</p>
@@ -405,7 +455,7 @@ export default function Home() {
       {/* ---------------------------------------------------------- */}
       <section id="packages" className="scroll-mt-24 bg-[#c9603f] px-6 py-24 text-[#f4f1e9] md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-14 max-w-7xl">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/60">
+          <p className="mb-3 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/60">
             02 / Featured journeys
           </p>
           <h2 className="max-w-2xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
@@ -428,11 +478,11 @@ export default function Home() {
                     alt={item.title}
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <span className="absolute left-4 top-4 rounded-full bg-[#f4f1e9] px-3 py-1 font-mono text-[10px] font-semibold text-[#181611]">
+                  <span className="absolute left-4 top-4 rounded-full bg-[#f4f1e9] px-3 py-1 font-sans font-semibold text-[10px] font-semibold text-[#181611]">
                     {item.price}
                   </span>
                 </div>
-                <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.15em] text-[#f4f1e9]/55">
+                <p className="mt-4 font-sans font-semibold text-[10px] uppercase tracking-[0.15em] text-[#f4f1e9]/55">
                   {item.meta}
                 </p>
                 <h3 className="mt-1 font-serif text-2xl font-medium tracking-tight">
@@ -452,7 +502,7 @@ export default function Home() {
       {/* ---------------------------------------------------------- */}
       <section id="process" className="scroll-mt-24 px-6 py-24 md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-14 max-w-7xl">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[#181611]/40">
+          <p className="mb-3 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#181611]/40">
             03 / How it works
           </p>
           <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
@@ -476,7 +526,7 @@ export default function Home() {
               className="flex flex-col justify-between gap-2 py-7 md:flex-row md:items-center md:py-9"
             >
               <div className="flex items-baseline gap-6">
-                <span className="font-mono text-[11px] text-[#c9603f]">0{i + 1}</span>
+                <span className="font-sans font-semibold text-[11px] text-[#c9603f]">0{i + 1}</span>
                 <h3 className="font-serif text-3xl font-medium tracking-tight md:text-4xl">
                   {row.step}
                 </h3>
@@ -494,7 +544,7 @@ export default function Home() {
       {/* ---------------------------------------------------------- */}
       <section id="events" className="scroll-mt-24 bg-[#4a4a35] px-6 py-24 text-[#f4f1e9] md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-12 max-w-7xl">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/55">
+          <p className="mb-3 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/55">
             04 / Events
           </p>
           <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
@@ -518,7 +568,7 @@ export default function Home() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                 <div className="absolute bottom-6 left-6 right-6">
-                  <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.15em] text-white/65">
+                  <p className="mb-2 font-sans font-semibold text-[10px] uppercase tracking-[0.15em] text-white/65">
                     {event.date}
                   </p>
                   <h3 className="max-w-sm font-serif text-3xl font-medium leading-tight tracking-tight text-white md:text-4xl">
@@ -536,7 +586,7 @@ export default function Home() {
       {/* ---------------------------------------------------------- */}
       <section id="journal" className="scroll-mt-24 px-6 py-24 md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-14 max-w-7xl">
-          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[#181611]/40">
+          <p className="mb-3 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#181611]/40">
             05 / Journal
           </p>
           <h2 className="max-w-xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
@@ -560,7 +610,7 @@ export default function Home() {
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.15em] text-[#181611]/40">
+                <p className="mt-4 font-sans font-semibold text-[10px] uppercase tracking-[0.15em] text-[#181611]/40">
                   {post.category}
                 </p>
                 <h3 className="mt-1 max-w-sm font-serif text-xl font-medium leading-tight tracking-tight">
@@ -580,7 +630,7 @@ export default function Home() {
           {...fadeUp}
           className="relative z-10 flex min-h-[60svh] flex-col justify-center px-6 py-16 md:px-10"
         >
-          <p className="mb-4 font-mono text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/50">
+          <p className="mb-4 font-sans font-semibold text-[11px] uppercase tracking-[0.2em] text-[#f4f1e9]/50">
             06 / Your next chapter
           </p>
           <h2 className="max-w-4xl font-serif text-5xl font-medium leading-[0.9] tracking-tight md:text-8xl">
@@ -602,12 +652,12 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col justify-between gap-10 border-b border-[#181611]/10 pb-10 md:flex-row">
             <div>
-              <p className="font-mono text-[14px] tracking-tight">TRAVELQ</p>
+              <p className="font-sans font-semibold text-[14px] tracking-tight">TRAVELQ</p>
               <p className="mt-3 max-w-sm text-[13px] leading-relaxed text-[#181611]/50">
                 Curated journeys and destinations worth travelling for.
               </p>
             </div>
-            <div className="grid grid-cols-2 gap-x-12 gap-y-2 font-mono text-[11px] uppercase tracking-[0.12em] text-[#181611]/55">
+            <div className="grid grid-cols-2 gap-x-12 gap-y-2 font-sans font-semibold text-[11px] uppercase tracking-[0.12em] text-[#181611]/55">
               <Link href="/destinations" className="hover:text-[#181611]">Destinations</Link>
               <Link href="/packages" className="hover:text-[#181611]">Packages</Link>
               <Link href="/events" className="hover:text-[#181611]">Events</Link>
@@ -616,7 +666,7 @@ export default function Home() {
               <Link href="/contact" className="hover:text-[#181611]">Contact</Link>
             </div>
           </div>
-          <div className="flex flex-col justify-between gap-2 pt-6 font-mono text-[10px] uppercase tracking-[0.12em] text-[#181611]/35 sm:flex-row">
+          <div className="flex flex-col justify-between gap-2 pt-6 font-sans font-semibold text-[10px] uppercase tracking-[0.12em] text-[#181611]/35 sm:flex-row">
             <span>© 2026 TravelQ</span>
             <span>Travel well. Go further.</span>
           </div>
