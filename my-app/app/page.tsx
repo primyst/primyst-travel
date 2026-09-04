@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
 import Link from "next/link";
 
 /* ------------------------------------------------------------------ */
@@ -129,12 +130,95 @@ const fadeUp = {
 };
 
 /* ------------------------------------------------------------------ */
+/* Scroll-aware nav — same visual language as the rest of the page.    */
+/* Hides on scroll down, reappears on scroll up, and switches from     */
+/* transparent-on-hero to a frosted ink bar once past the hero.        */
+/* ------------------------------------------------------------------ */
+
+function ScrollNav() {
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+  const [solid, setSolid] = useState(false);
+  const [lastY, setLastY] = useState(0);
+
+  useMotionValueEvent(scrollY, "change", (y) => {
+    setSolid(y > 80);
+    if (y < 80) {
+      setHidden(false);
+    } else if (y > lastY + 4) {
+      setHidden(true);
+    } else if (y < lastY - 4) {
+      setHidden(false);
+    }
+    setLastY(y);
+  });
+
+  const navLinks = [
+    { href: "/destinations", label: "Destinations" },
+    { href: "/packages", label: "Journeys" },
+    { href: "/events", label: "Events" },
+    { href: "/journal", label: "Journal" },
+    { href: "/about", label: "About" },
+  ];
+
+  return (
+    <motion.nav
+      animate={{ y: hidden ? "-120%" : "0%" }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      className={`fixed left-0 right-0 top-0 z-50 flex items-center justify-between px-6 py-4 transition-colors duration-500 md:px-10 ${
+        solid
+          ? "border-b border-[#181611]/10 bg-[#f4f1e9]/85 backdrop-blur-md"
+          : "bg-transparent"
+      }`}
+    >
+      <Link
+        href="/"
+        className={`font-mono text-[13px] tracking-tight transition-colors ${
+          solid ? "text-[#181611]" : "text-[#181611] md:text-white"
+        }`}
+      >
+        TRAVELQ
+      </Link>
+
+      <div
+        className={`hidden items-center gap-8 font-mono text-[11px] uppercase tracking-[0.15em] transition-colors md:flex ${
+          solid ? "text-[#181611]/60" : "text-white/75"
+        }`}
+      >
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className="relative transition-opacity hover:opacity-70"
+          >
+            {link.label}
+          </Link>
+        ))}
+      </div>
+
+      <Link
+        href="/contact"
+        className={`rounded-full border px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] transition ${
+          solid
+            ? "border-[#181611]/30 text-[#181611] hover:bg-[#181611] hover:text-[#f4f1e9]"
+            : "border-white/40 text-white hover:bg-white hover:text-black"
+        }`}
+      >
+        Contact
+      </Link>
+    </motion.nav>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /* Page                                                                 */
 /* ------------------------------------------------------------------ */
 
 export default function Home() {
   return (
     <main className="bg-[#f4f1e9] text-[#181611]">
+      <ScrollNav />
+
       {/* Sticky side-index nav — replaces the usual floating hamburger/nav */}
       <div className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 flex-col items-end gap-3 md:flex">
         {sections.map((s, i) => (
@@ -155,19 +239,6 @@ export default function Home() {
       {/* HERO — split panel, not full-bleed dark video              */}
       {/* ---------------------------------------------------------- */}
       <section className="relative flex min-h-[100svh] flex-col md:flex-row">
-        {/* Nav */}
-        <nav className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-6 py-6 md:px-10">
-          <Link href="/" className="font-mono text-[13px] tracking-tight text-[#181611] md:text-white">
-            TRAVELQ
-          </Link>
-          <Link
-            href="/contact"
-            className="rounded-full border border-[#181611]/30 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#181611] transition hover:bg-[#181611] hover:text-[#f4f1e9] md:border-white/40 md:text-white md:hover:bg-white md:hover:text-black"
-          >
-            Contact
-          </Link>
-        </nav>
-
         {/* Left: ink panel with oversized display type */}
         <div className="flex min-h-[56svh] w-full flex-col justify-end bg-[#181611] px-6 pb-12 pt-24 text-[#f4f1e9] md:min-h-[100svh] md:w-[46%] md:px-10 md:pb-16">
           <motion.p
@@ -233,18 +304,24 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Right: full photo, no gradient text overlay needed */}
+        {/* Right: cinematic video, poster fallback keeps it safe pre-load */}
         <motion.div
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, ease }}
           className="relative min-h-[44svh] w-full overflow-hidden md:min-h-[100svh] md:w-[54%]"
         >
-          <img
-            src={destinations[0].image}
-            alt="Dubai skyline"
+          <video
             className="h-full w-full object-cover"
-          />
+            autoPlay
+            muted
+            loop
+            playsInline
+            poster={destinations[0].image}
+          >
+            <source src="/videos/luxury.mp4" type="video/mp4" />
+          </video>
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-[#181611]/15" />
         </motion.div>
       </section>
 
