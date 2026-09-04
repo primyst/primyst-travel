@@ -120,7 +120,7 @@ export default function AboutPage() {
       <section className="px-6 py-24 md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[0.7fr_1.3fr] md:items-end">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#181611]/40">
-            01 / Our approach
+            Our approach
           </p>
           <div>
             <h2 className="max-w-3xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
@@ -143,7 +143,7 @@ export default function AboutPage() {
       <section className="bg-[#c9603f] px-6 py-24 text-[#f4f1e9] md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-14 max-w-7xl">
           <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#f4f1e9]/60">
-            02 / What matters to us
+            What matters to us
           </p>
           <h2 className="max-w-2xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
             Good travel is in the details.
@@ -180,7 +180,7 @@ export default function AboutPage() {
       <section className="bg-[#181611] px-6 py-24 text-[#f4f1e9] md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto mb-14 max-w-7xl">
           <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#f4f1e9]/45">
-            03 / How TravelQ works
+            How TravelQ works
           </p>
           <h2 className="max-w-2xl font-serif text-4xl font-medium leading-[0.98] tracking-tight md:text-6xl">
             From a passing idea to a real journey.
@@ -215,7 +215,7 @@ export default function AboutPage() {
       <section className="bg-[#4a4a35] px-6 py-24 text-[#f4f1e9] md:px-10 md:py-32">
         <motion.div {...fadeUp} className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[0.7fr_1.3fr]">
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#f4f1e9]/55">
-            04 / The TravelQ promise
+            The TravelQ promise
           </p>
           <div>
             <p className="max-w-3xl font-serif text-3xl font-medium leading-tight tracking-tight md:text-5xl">
