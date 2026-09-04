@@ -8,8 +8,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['Playfair Display', 'serif'],
-      },
+        sans: ["var(--font-dm-sans)", "sans-serif"],
+      serif: ["var(--font-playfair)", "serif"],
     },
   },
   plugins: [],
