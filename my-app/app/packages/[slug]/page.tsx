@@ -1,0 +1,40 @@
+'use client';
+
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { motion } from 'framer-motion';
+
+const packages: Record<string, any> = {
+  'dubai-escape': { title: 'Dubai Escape', destination: 'Dubai, United Arab Emirates', duration: '5 Nights', category: 'City & Leisure', price: 'From £1,850', description: 'A carefully paced introduction to Dubai, balancing the city’s energy with time to slow down and enjoy the experience.', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=2200&q=85', includes: ['Selected accommodation', 'Airport transfers', 'Curated city experiences', 'Pre-departure trip guidance'], itinerary: [['Day 01', 'Arrival in Dubai', 'Settle in and begin the journey at your own pace.'], ['Day 02—03', 'Explore the city', 'Discover the landmarks, neighbourhoods and experiences that make Dubai unique.'], ['Day 04', 'A different side of Dubai', 'Make room for an experience beyond the usual city itinerary.'], ['Day 05', 'Departure', 'Wrap up the journey and head home with the details taken care of.']] },
+  'london-discovery': { title: 'London Discovery', destination: 'London, United Kingdom', duration: '6 Nights', category: 'City Break', price: 'From £2,100', description: 'A considered city journey designed to give you time for London beyond simply ticking landmarks off a list.', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2200&q=85', includes: ['Selected accommodation', 'Airport transfers', 'Curated experiences', 'Pre-departure trip guidance'], itinerary: [['Day 01', 'Arrive in London', 'Settle in and get your first sense of the city.'], ['Day 02—04', 'Discover London', 'Explore landmarks, neighbourhoods, food and culture at a considered pace.'], ['Day 05', 'Make it your own', 'Keep the day open for the places that interested you most.'], ['Day 06', 'Departure', 'A smooth close to your London journey.']] },
+  'cape-town-explorer': { title: 'Cape Town Explorer', destination: 'Cape Town, South Africa', duration: '7 Nights', category: 'Nature & Culture', price: 'From £1,950', description: 'Mountains, coastlines, vineyards and city life come together in a journey built for travellers who want variety.', image: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=2200&q=85', includes: ['Selected accommodation', 'Airport transfers', 'Curated tours', 'Pre-departure trip guidance'], itinerary: [['Day 01', 'Arrive in Cape Town', 'Settle in beneath one of the world’s most distinctive landscapes.'], ['Day 02—03', 'The city and its surroundings', 'Explore Cape Town’s culture, coast and landmarks.'], ['Day 04—06', 'Beyond the city', 'Make space for landscapes, wine country and unforgettable experiences.'], ['Day 07', 'Departure', 'A considered end to the journey.']] },
+};
+
+const fadeUp = { hidden: { opacity: 0, y: 28 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } } };
+
+export default function PackageDetailPage() {
+  const params = useParams();
+  const slug = typeof params.slug === 'string' ? params.slug : '';
+  const trip = packages[slug];
+
+  if (!trip) return <main className="grid min-h-screen place-items-center bg-[#f5f4ef] px-6 text-center"><div><p className="text-sm text-slate-500">Package not found</p><Link href="/packages" className="mt-5 inline-block underline">Explore packages</Link></div></main>;
+
+  return (
+    <main className="min-h-screen bg-[#f5f4ef] text-slate-950">
+      <section className="relative min-h-[85vh] overflow-hidden text-white">
+        <img src={trip.image} alt={trip.title} className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/45" />
+        <nav className="absolute inset-x-0 top-0 z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10"><Link href="/" className="font-serif text-2xl">TravelQ.</Link><Link href="/packages" className="text-sm text-white/80 hover:text-white">← All packages</Link></nav>
+        <div className="relative z-10 mx-auto flex min-h-[85vh] max-w-7xl items-end px-6 pb-16 lg:px-10 lg:pb-20"><motion.div initial="hidden" animate="visible" variants={fadeUp} className="max-w-5xl"><p className="text-xs uppercase tracking-[0.3em] text-white/65">{trip.category} · {trip.duration}</p><h1 className="mt-6 font-serif text-5xl leading-[0.95] tracking-tight sm:text-7xl lg:text-[8rem]">{trip.title}</h1><p className="mt-6 text-lg text-white/75">{trip.destination}</p></motion.div></div>
+      </section>
+
+      <section className="mx-auto grid max-w-7xl gap-14 px-6 py-20 lg:grid-cols-[0.65fr_1.35fr] lg:px-10 lg:py-28"><div><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">The journey</p></div><div><p className="max-w-3xl font-serif text-4xl leading-tight sm:text-6xl">{trip.description}</p><div className="mt-12 flex flex-wrap gap-x-12 gap-y-6 border-y border-slate-900/10 py-7"><div><p className="text-xs uppercase tracking-[0.2em] text-slate-400">Duration</p><p className="mt-2 font-medium">{trip.duration}</p></div><div><p className="text-xs uppercase tracking-[0.2em] text-slate-400">Journey</p><p className="mt-2 font-medium">{trip.category}</p></div><div><p className="text-xs uppercase tracking-[0.2em] text-slate-400">Starting from</p><p className="mt-2 font-medium">{trip.price}</p></div></div></div></section>
+
+      <section className="bg-white px-6 py-20 lg:px-10 lg:py-28"><div className="mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.65fr_1.35fr]"><div><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">What’s included</p></div><div className="grid gap-5 sm:grid-cols-2">{trip.includes.map((item: string, i: number) => <div key={item} className="border-t border-slate-200 pt-5"><span className="text-xs text-slate-400">0{i + 1}</span><p className="mt-8 text-lg">{item}</p></div>)}</div></div></section>
+
+      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-28"><div className="grid gap-14 lg:grid-cols-[0.65fr_1.35fr]"><div><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">A glimpse of the plan</p></div><div className="divide-y divide-slate-900/10">{trip.itinerary.map(([day, title, text]: string[]) => <div key={day} className="grid gap-5 py-8 sm:grid-cols-[120px_1fr]"><p className="text-sm text-slate-400">{day}</p><div><h3 className="font-serif text-2xl">{title}</h3><p className="mt-3 max-w-xl leading-7 text-slate-600">{text}</p></div></div>)}</div></div></section>
+
+      <section className="bg-slate-950 px-6 py-24 text-white lg:px-10 lg:py-32"><div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1fr] lg:items-end"><div><p className="text-xs uppercase tracking-[0.3em] text-white/40">Interested in this journey?</p><h2 className="mt-7 max-w-3xl font-serif text-5xl leading-tight sm:text-7xl">Let’s talk about the details.</h2></div><div><p className="max-w-lg text-lg leading-8 text-white/60">Tell us you are interested in {trip.title}. We’ll have the package context already, so there is no long form to complete.</p><Link href={`/contact?package=${slug}`} className="mt-8 inline-flex rounded-full bg-white px-7 py-4 text-sm font-medium text-slate-950">Enquire about this package <span className="ml-6">↗</span></Link></div></div></section>
+    </main>
+  );
+}
