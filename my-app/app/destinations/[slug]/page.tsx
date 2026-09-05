@@ -1,84 +1,42 @@
 'use client';
 
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 
-const destinations = {
-  dubai: {
-    name: 'Dubai', country: 'United Arab Emirates', region: 'Middle East',
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=2200&q=85',
-    intro: 'A city of contrasts where extraordinary architecture, desert landscapes and coastal living exist within one journey.',
-    description: 'Dubai can be exactly what you want it to be. Spend your days exploring the city, head beyond it into the desert, discover its coastline, or simply take your time. The experience changes with the journey you choose.',
-    highlights: ['Downtown & Burj Khalifa', 'Desert experiences', 'Dubai Marina', 'Shopping & dining'],
-    package: 'Dubai Escape', duration: '5 nights', packageImage: 'https://images.unsplash.com/photo-1526495124232-a04e1849168c?auto=format&fit=crop&w=1400&q=85',
-  },
-  london: {
-    name: 'London', country: 'United Kingdom', region: 'Europe',
-    image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2200&q=85',
-    intro: 'Historic streets, contemporary culture and a different discovery waiting in almost every neighbourhood.',
-    description: 'London rewards curiosity. See the landmarks, then leave room for everything between them — neighbourhood cafés, galleries, markets, parks and the small discoveries that make a city memorable.',
-    highlights: ['Historic landmarks', 'Neighbourhoods & culture', 'Museums & galleries', 'Food & city life'],
-    package: 'London Discovery', duration: '6 nights', packageImage: 'https://images.unsplash.com/photo-1486299267070-83823f5448dd?auto=format&fit=crop&w=1400&q=85',
-  },
-  paris: {
-    name: 'Paris', country: 'France', region: 'Europe',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2200&q=85',
-    intro: 'A city best experienced with enough time to wander, stop, look up and discover what is beyond the obvious.',
-    description: 'Paris is full of landmarks, but its atmosphere lives in the spaces between them. Take your time with its streets, cafés, architecture and neighbourhoods, and let the city unfold at its own pace.',
-    highlights: ['Art & architecture', 'Cafés & dining', 'Iconic landmarks', 'Neighbourhood walks'],
-    package: 'Paris at Your Pace', duration: '5 nights', packageImage: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1400&q=85',
-  },
-  'cape-town': {
-    name: 'Cape Town', country: 'South Africa', region: 'Africa',
-    image: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=2200&q=85',
-    intro: 'Few cities bring mountains, ocean, vineyards and adventure together quite like Cape Town.',
-    description: 'Cape Town offers several journeys in one destination. Explore dramatic coastlines, spend time in the city, discover the surrounding winelands or head out into landscapes that make the journey itself part of the experience.',
-    highlights: ['Table Mountain', 'Coastal routes', 'Winelands', 'Culture & cuisine'],
-    package: 'Cape Town Explorer', duration: '7 nights', packageImage: 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?auto=format&fit=crop&w=1400&q=85',
-  },
-} as const;
+const destinations: Record<string, { name: string; country: string; region: string; image: string; intro: string; description: string; highlights: string[]; package: string; duration: string; packageImage: string }> = {
+  dubai: { name: 'Dubai', country: 'United Arab Emirates', region: 'Middle East', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=2200&q=85', intro: 'A city of contrasts where extraordinary architecture, desert landscapes and coastal living exist within one journey.', description: 'Dubai can be exactly what you want it to be. Spend your days exploring the city, head beyond it into the desert, discover its coastline, or simply take your time. The experience changes with the journey you choose.', highlights: ['Downtown & Burj Khalifa', 'Desert experiences', 'Dubai Marina', 'Shopping & dining'], package: 'Dubai Escape', duration: '5 nights', packageImage: 'https://images.unsplash.com/photo-1526495124232-a04e1849168c?auto=format&fit=crop&w=1400&q=85' },
+  london: { name: 'London', country: 'United Kingdom', region: 'Europe', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=2200&q=85', intro: 'Historic streets, contemporary culture and a different discovery waiting in almost every neighbourhood.', description: 'London rewards curiosity. See the landmarks, then leave room for everything between them — neighbourhood cafés, galleries, markets, parks and the small discoveries that make a city memorable.', highlights: ['Historic landmarks', 'Neighbourhoods & culture', 'Museums & galleries', 'Food & city life'], package: 'London Discovery', duration: '6 nights', packageImage: 'https://images.unsplash.com/photo-1486299267070-83823f5448dd?auto=format&fit=crop&w=1400&q=85' },
+  paris: { name: 'Paris', country: 'France', region: 'Europe', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=2200&q=85', intro: 'A city best experienced with enough time to wander, stop, look up and discover what is beyond the obvious.', description: 'Paris is full of landmarks, but its atmosphere lives in the spaces between them. Take your time with its streets, cafés, architecture and neighbourhoods, and let the city unfold at its own pace.', highlights: ['Art & architecture', 'Cafés & dining', 'Iconic landmarks', 'Neighbourhood walks'], package: 'Paris at Your Pace', duration: '5 nights', packageImage: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=1400&q=85' },
+  'cape-town': { name: 'Cape Town', country: 'South Africa', region: 'Africa', image: 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=2200&q=85', intro: 'Few cities bring mountains, ocean, vineyards and adventure together quite like Cape Town.', description: 'Cape Town offers several journeys in one destination. Explore dramatic coastlines, spend time in the city, discover the surrounding winelands or head out into landscapes that make the journey itself part of the experience.', highlights: ['Table Mountain', 'Coastal routes', 'Winelands', 'Culture & cuisine'], package: 'Cape Town Explorer', duration: '7 nights', packageImage: 'https://images.unsplash.com/photo-1566753323558-f4e0952af115?auto=format&fit=crop&w=1400&q=85' },
+  istanbul: { name: 'Istanbul', country: 'Türkiye', region: 'Europe', image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=2200&q=85', intro: 'A city shaped by two continents, layered history and a culture best experienced firsthand.', description: 'Istanbul brings together centuries of history, neighbourhood life, remarkable food and the energy of a city connecting Europe and Asia.', highlights: ['Historic old city', 'Bosphorus', 'Markets & cuisine', 'Neighbourhood culture'], package: 'Istanbul Discovery', duration: '5 nights', packageImage: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=1400&q=85' },
+  maldives: { name: 'Maldives', country: 'Indian Ocean', region: 'Asia', image: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=2200&q=85', intro: 'Clear water, secluded stays and a slower rhythm for when the journey is about switching off.', description: 'The Maldives is made for slowing down. Days can be shaped around the water, quiet mornings, long meals and the kind of space that makes a holiday feel genuinely restorative.', highlights: ['Island stays', 'Clear-water experiences', 'Ocean dining', 'Slow days'], package: 'Maldives Escape', duration: '6 nights', packageImage: 'https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=1400&q=85' },
+  tokyo: { name: 'Tokyo', country: 'Japan', region: 'Asia', image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=2200&q=85', intro: 'Neon streets, quiet temples and a precision to daily life that rewards taking your time.', description: 'Tokyo moves quickly, but it also rewards slow exploration. Balance iconic neighbourhoods with quiet streets, excellent food and small discoveries.', highlights: ['City neighbourhoods', 'Temples & culture', 'Food experiences', 'Design & technology'], package: 'Tokyo Explorer', duration: '7 nights', packageImage: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1400&q=85' },
+  'new-york': { name: 'New York', country: 'United States', region: 'Americas', image: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=2200&q=85', intro: 'A skyline, a pace and a mix of neighbourhoods that never quite feels finished discovering.', description: 'New York is best approached with room for spontaneity. See the landmarks, then let the city pull you into neighbourhoods, restaurants, galleries and parks.', highlights: ['Manhattan landmarks', 'Neighbourhoods', 'Food & culture', 'Arts & entertainment'], package: 'New York City Break', duration: '6 nights', packageImage: 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?auto=format&fit=crop&w=1400&q=85' },
+  rome: { name: 'Rome', country: 'Italy', region: 'Europe', image: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=2200&q=85', intro: 'History underfoot at every turn, with food and streets that give you a reason to slow down.', description: 'Rome combines monumental history with an everyday rhythm of cafés, piazzas, neighbourhood walks and long meals.', highlights: ['Ancient Rome', 'Art & architecture', 'Italian cuisine', 'Neighbourhood walks'], package: 'Rome at Your Pace', duration: '5 nights', packageImage: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1400&q=85' },
+  marrakech: { name: 'Marrakech', country: 'Morocco', region: 'Africa', image: 'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?auto=format&fit=crop&w=2200&q=85', intro: 'Souks, riads and a colour palette that stays with you long after the journey ends.', description: 'Marrakech is a destination of texture and atmosphere, from the medina and markets to quieter riad courtyards and food experiences.', highlights: ['Medina & souks', 'Riads', 'Moroccan cuisine', 'Culture & design'], package: 'Marrakech Escape', duration: '5 nights', packageImage: 'https://images.unsplash.com/photo-1489749798305-4fea3ae63d43?auto=format&fit=crop&w=1400&q=85' },
+  reykjavik: { name: 'Reykjavik', country: 'Iceland', region: 'Europe', image: 'https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=2200&q=85', intro: 'A gateway to glaciers, geothermal water and landscapes that feel like another planet.', description: 'Reykjavik works as both a city stay and a base for exploring Iceland’s dramatic landscapes, geothermal pools and changing skies.', highlights: ['Geothermal experiences', 'Golden Circle', 'Coastal landscapes', 'Local food'], package: 'Iceland Explorer', duration: '6 nights', packageImage: 'https://images.unsplash.com/photo-1504829857797-ddff29c27927?auto=format&fit=crop&w=1400&q=85' },
+  zanzibar: { name: 'Zanzibar', country: 'Tanzania', region: 'Africa', image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=2200&q=85', intro: 'Spice-scented streets in Stone Town and coastline built for doing absolutely nothing.', description: 'Zanzibar combines history, island culture and long stretches of coastline. Explore Stone Town, discover local flavours and leave plenty of time for the ocean.', highlights: ['Stone Town', 'Island beaches', 'Spice experiences', 'Ocean days'], package: 'Zanzibar Escape', duration: '6 nights', packageImage: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=1400&q=85' },
+};
 
-const fallback = destinations.dubai;
 const fadeUp = { hidden: { opacity: 0, y: 28 }, visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } } };
 
-export default function DestinationDetailPage({ params }: { params: { slug: string } }) {
-  const destination = destinations[params.slug as keyof typeof destinations] || fallback;
+export default function DestinationDetailPage() {
+  const params = useParams();
+  const slug = typeof params.slug === 'string' ? params.slug : '';
+  const destination = destinations[slug];
+
+  if (!destination) return <main className="grid min-h-screen place-items-center bg-[#f5f4ef] px-6 text-center"><div><p className="text-sm text-slate-500">Destination not found</p><Link href="/destinations" className="mt-5 inline-block underline">Explore destinations</Link></div></main>;
+
+  const packageSlug = destination.package.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
   return (
     <main className="min-h-screen bg-[#f5f4ef] text-slate-950">
-      <section className="relative min-h-[86vh] overflow-hidden text-white">
-        <img src={destination.image} alt={`${destination.name}, ${destination.country}`} className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/35" />
-        <header className="absolute inset-x-0 top-0 z-10 border-b border-white/15">
-          <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
-            <Link href="/" className="font-serif text-2xl">TravelQ.</Link>
-            <div className="hidden items-center gap-8 text-sm md:flex">
-              <Link href="/destinations">Destinations</Link><Link href="/packages">Packages</Link><Link href="/events">Events</Link><Link href="/blog">Journal</Link><Link href="/about">About</Link><Link href="/contact" className="rounded-full border border-white/50 px-5 py-2.5">Contact</Link>
-            </div>
-          </nav>
-        </header>
-        <div className="relative z-10 mx-auto flex min-h-[86vh] max-w-7xl items-end px-6 pb-16 pt-32 lg:px-10 lg:pb-24">
-          <motion.div initial="hidden" animate="visible" variants={fadeUp}>
-            <p className="text-xs uppercase tracking-[0.3em] text-white/65">{destination.region} · {destination.country}</p>
-            <h1 className="mt-5 font-serif text-6xl tracking-tight sm:text-8xl lg:text-[10rem]">{destination.name}</h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-white/75">{destination.intro}</p>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[0.7fr_1.3fr] lg:px-10 lg:py-32">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">About {destination.name}</p>
-        <div><h2 className="font-serif text-4xl leading-tight sm:text-6xl">More than a place to visit.</h2><p className="mt-8 max-w-2xl text-lg leading-8 text-slate-600">{destination.description}</p></div>
-      </section>
-
+      <section className="relative min-h-[86vh] overflow-hidden text-white"><img src={destination.image} alt={`${destination.name}, ${destination.country}`} className="absolute inset-0 h-full w-full object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/35" /><header className="absolute inset-x-0 top-0 z-10 border-b border-white/15"><nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10"><Link href="/" className="font-serif text-2xl">TravelQ.</Link><div className="hidden items-center gap-8 text-sm md:flex"><Link href="/destinations">Destinations</Link><Link href="/packages">Packages</Link><Link href="/events">Events</Link><Link href="/blog">Journal</Link><Link href="/about">About</Link><Link href="/contact" className="rounded-full border border-white/50 px-5 py-2.5">Contact</Link></div></nav></header><div className="relative z-10 mx-auto flex min-h-[86vh] max-w-7xl items-end px-6 pb-16 pt-32 lg:px-10 lg:pb-24"><motion.div initial="hidden" animate="visible" variants={fadeUp}><p className="text-xs uppercase tracking-[0.3em] text-white/65">{destination.region} · {destination.country}</p><h1 className="mt-5 font-serif text-6xl tracking-tight sm:text-8xl lg:text-[10rem]">{destination.name}</h1><p className="mt-6 max-w-xl text-lg leading-8 text-white/75">{destination.intro}</p></motion.div></div></section>
+      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[0.7fr_1.3fr] lg:px-10 lg:py-32"><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">About {destination.name}</p><div><h2 className="font-serif text-4xl leading-tight sm:text-6xl">More than a place to visit.</h2><p className="mt-8 max-w-2xl text-lg leading-8 text-slate-600">{destination.description}</p></div></section>
       <section className="bg-white px-6 py-24 lg:px-10 lg:py-32"><div className="mx-auto max-w-7xl"><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">What to experience</p><div className="mt-14 grid border-t border-slate-200 sm:grid-cols-2 lg:grid-cols-4">{destination.highlights.map((item, index) => <div key={item} className="border-b border-r border-slate-200 p-7 first:pl-0 last:border-r-0 lg:border-b-0"><span className="text-xs text-slate-400">0{index + 1}</span><h3 className="mt-16 font-serif text-3xl">{item}</h3></div>)}</div></div></section>
-
-      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1fr_1fr] lg:items-center lg:px-10 lg:py-32">
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="overflow-hidden"><img src={destination.packageImage} alt={destination.package} className="aspect-[4/5] w-full object-cover" /></motion.div>
-        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Featured journey</p><h2 className="mt-6 font-serif text-5xl leading-tight sm:text-7xl">{destination.package}</h2><p className="mt-6 text-sm text-slate-400">{destination.duration} · {destination.name}</p><p className="mt-8 max-w-lg text-lg leading-8 text-slate-600">Start with a journey built around the destination, then explore the details and decide whether it is right for your trip.</p><Link href={`/packages/${destination.package.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`} className="mt-9 inline-flex rounded-full bg-slate-950 px-7 py-4 text-sm font-medium text-white">Explore this journey <span className="ml-6">↗</span></Link></motion.div>
-      </section>
-
-      <section className="bg-slate-950 px-6 py-24 text-white lg:px-10 lg:py-32"><div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1fr] lg:items-end"><div><p className="text-xs uppercase tracking-[0.3em] text-white/40">Have {destination.name} in mind?</p><h2 className="mt-7 max-w-3xl font-serif text-5xl leading-tight sm:text-7xl">You can start with a simple question.</h2></div><div className="lg:pb-2"><p className="max-w-lg text-lg leading-8 text-white/60">Tell us what you are considering and we can take the conversation from there. You do not need every detail figured out before reaching out.</p><Link href={`/contact?destination=${params.slug}`} className="mt-8 inline-flex rounded-full bg-white px-7 py-4 text-sm font-medium text-slate-950">Enquire about {destination.name} <span className="ml-6">↗</span></Link></div></div></section>
+      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1fr_1fr] lg:items-center lg:px-10 lg:py-32"><motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="overflow-hidden"><img src={destination.packageImage} alt={destination.package} className="aspect-[4/5] w-full object-cover" /></motion.div><motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Featured journey</p><h2 className="mt-6 font-serif text-5xl leading-tight sm:text-7xl">{destination.package}</h2><p className="mt-6 text-sm text-slate-400">{destination.duration} · {destination.name}</p><p className="mt-8 max-w-lg text-lg leading-8 text-slate-600">Start with a journey built around the destination, then explore the details and decide whether it is right for your trip.</p><Link href={`/packages/${packageSlug}`} className="mt-9 inline-flex rounded-full bg-slate-950 px-7 py-4 text-sm font-medium text-white">Explore this journey <span className="ml-6">↗</span></Link></motion.div></section>
+      <section className="bg-slate-950 px-6 py-24 text-white lg:px-10 lg:py-32"><div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1fr] lg:items-end"><div><p className="text-xs uppercase tracking-[0.3em] text-white/40">Have {destination.name} in mind?</p><h2 className="mt-7 max-w-3xl font-serif text-5xl leading-tight sm:text-7xl">You can start with a simple question.</h2></div><div className="lg:pb-2"><p className="max-w-lg text-lg leading-8 text-white/60">Tell us what you are considering and we can take the conversation from there. You do not need every detail figured out before reaching out.</p><Link href={`/enquire?type=destination&slug=${slug}`} className="mt-8 inline-flex rounded-full bg-white px-7 py-4 text-sm font-medium text-slate-950">Enquire about {destination.name} <span className="ml-6">↗</span></Link></div></div></section>
     </main>
   );
 }
