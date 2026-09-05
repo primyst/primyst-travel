@@ -26,17 +26,54 @@ export default function DestinationDetailPage() {
   const slug = typeof params.slug === 'string' ? params.slug : '';
   const destination = destinations[slug];
 
-  if (!destination) return <main className="grid min-h-screen place-items-center bg-[#f5f4ef] px-6 text-center"><div><p className="text-sm text-slate-500">Destination not found</p><Link href="/destinations" className="mt-5 inline-block underline">Explore destinations</Link></div></main>;
-
-  const packageSlug = destination.package.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  if (!destination) return <main className="grid min-h-screen place-items-center bg-[#f5f4ef] px-6 text-center"><div><p className="text-sm text-slate-500">Destination not found</p><Link href="/destinations" className="mt-5 inline-block underline">Back to destinations</Link></div></main>;
 
   return (
     <main className="min-h-screen bg-[#f5f4ef] text-slate-950">
-      <section className="relative min-h-[86vh] overflow-hidden text-white"><img src={destination.image} alt={`${destination.name}, ${destination.country}`} className="absolute inset-0 h-full w-full object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-black/35" /><header className="absolute inset-x-0 top-0 z-10 border-b border-white/15"><nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10"><Link href="/" className="font-serif text-2xl">TravelQ.</Link><div className="hidden items-center gap-8 text-sm md:flex"><Link href="/destinations">Destinations</Link><Link href="/packages">Packages</Link><Link href="/events">Events</Link><Link href="/blog">Journal</Link><Link href="/about">About</Link><Link href="/contact" className="rounded-full border border-white/50 px-5 py-2.5">Contact</Link></div></nav></header><div className="relative z-10 mx-auto flex min-h-[86vh] max-w-7xl items-end px-6 pb-16 pt-32 lg:px-10 lg:pb-24"><motion.div initial="hidden" animate="visible" variants={fadeUp}><p className="text-xs uppercase tracking-[0.3em] text-white/65">{destination.region} · {destination.country}</p><h1 className="mt-5 font-serif text-6xl tracking-tight sm:text-8xl lg:text-[10rem]">{destination.name}</h1><p className="mt-6 max-w-xl text-lg leading-8 text-white/75">{destination.intro}</p></motion.div></div></section>
-      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[0.7fr_1.3fr] lg:px-10 lg:py-32"><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">About {destination.name}</p><div><h2 className="font-serif text-4xl leading-tight sm:text-6xl">More than a place to visit.</h2><p className="mt-8 max-w-2xl text-lg leading-8 text-slate-600">{destination.description}</p></div></section>
-      <section className="bg-white px-6 py-24 lg:px-10 lg:py-32"><div className="mx-auto max-w-7xl"><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">What to experience</p><div className="mt-14 grid border-t border-slate-200 sm:grid-cols-2 lg:grid-cols-4">{destination.highlights.map((item, index) => <div key={item} className="border-b border-r border-slate-200 p-7 first:pl-0 last:border-r-0 lg:border-b-0"><span className="text-xs text-slate-400">0{index + 1}</span><h3 className="mt-16 font-serif text-3xl">{item}</h3></div>)}</div></div></section>
-      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1fr_1fr] lg:items-center lg:px-10 lg:py-32"><motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="overflow-hidden"><img src={destination.packageImage} alt={destination.package} className="aspect-[4/5] w-full object-cover" /></motion.div><motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Featured journey</p><h2 className="mt-6 font-serif text-5xl leading-tight sm:text-7xl">{destination.package}</h2><p className="mt-6 text-sm text-slate-400">{destination.duration} · {destination.name}</p><p className="mt-8 max-w-lg text-lg leading-8 text-slate-600">Start with a journey built around the destination, then explore the details and decide whether it is right for your trip.</p><Link href={`/packages/${packageSlug}`} className="mt-9 inline-flex rounded-full bg-slate-950 px-7 py-4 text-sm font-medium text-white">Explore this journey <span className="ml-6">↗</span></Link></motion.div></section>
-      <section className="bg-slate-950 px-6 py-24 text-white lg:px-10 lg:py-32"><div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1fr] lg:items-end"><div><p className="text-xs uppercase tracking-[0.3em] text-white/40">Have {destination.name} in mind?</p><h2 className="mt-7 max-w-3xl font-serif text-5xl leading-tight sm:text-7xl">You can start with a simple question.</h2></div><div className="lg:pb-2"><p className="max-w-lg text-lg leading-8 text-white/60">Tell us what you are considering and we can take the conversation from there. You do not need every detail figured out before reaching out.</p><Link href={`/enquire?type=destination&slug=${slug}`} className="mt-8 inline-flex rounded-full bg-white px-7 py-4 text-sm font-medium text-slate-950">Enquire about {destination.name} <span className="ml-6">↗</span></Link></div></div></section>
+      <section className="relative min-h-[82vh] overflow-hidden text-white">
+        <img src={destination.image} alt={`${destination.name}, ${destination.country}`} className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40" />
+        <nav className="absolute inset-x-0 top-0 z-10 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
+          <Link href="/" className="font-serif text-2xl">TravelQ.</Link>
+          <Link href="/destinations" className="text-sm text-white/75 hover:text-white">← All destinations</Link>
+        </nav>
+        <div className="relative z-10 mx-auto flex min-h-[82vh] max-w-7xl items-end px-6 pb-16 pt-32 lg:px-10 lg:pb-24">
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="max-w-5xl">
+            <p className="text-xs uppercase tracking-[0.3em] text-white/60">{destination.region} · {destination.country}</p>
+            <h1 className="mt-5 font-serif text-6xl tracking-tight sm:text-8xl lg:text-[10rem]">{destination.name}</h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-white/75">{destination.intro}</p>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[0.7fr_1.3fr] lg:px-10 lg:py-32">
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">The destination</p>
+        <div><h2 className="font-serif text-4xl leading-tight sm:text-6xl">More than a place to visit.</h2><p className="mt-8 max-w-2xl text-lg leading-8 text-slate-600">{destination.description}</p></div>
+      </section>
+
+      <section className="bg-white px-6 py-20 lg:px-10 lg:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-[0.7fr_1.3fr] lg:items-end"><p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">A feel for the journey</p><p className="max-w-xl text-lg leading-8 text-slate-600">A few of the experiences that can shape time in {destination.name}.</p></div>
+          <div className="mt-14 grid border-t border-slate-200 sm:grid-cols-2 lg:grid-cols-4">{destination.highlights.map((item, index) => <div key={item} className="border-b border-slate-200 p-7 first:pl-0 lg:border-b-0 lg:border-r lg:last:border-r-0"><span className="text-xs text-slate-400">0{index + 1}</span><h3 className="mt-16 font-serif text-3xl">{item}</h3></div>)}</div>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-7xl gap-12 px-6 py-24 lg:grid-cols-[1fr_1fr] lg:items-center lg:px-10 lg:py-32">
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="overflow-hidden"><img src={destination.packageImage} alt={`${destination.package} in ${destination.name}`} className="aspect-[4/5] w-full object-cover" /></motion.div>
+        <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">A journey built around it</p>
+          <h2 className="mt-6 font-serif text-5xl leading-tight sm:text-7xl">{destination.package}</h2>
+          <p className="mt-5 text-sm text-slate-400">{destination.duration} · {destination.name}</p>
+          <p className="mt-7 max-w-lg text-lg leading-8 text-slate-600">A considered way to experience the destination, with the important details planned before you travel and room to make the journey your own.</p>
+        </motion.div>
+      </section>
+
+      <section className="bg-slate-950 px-6 py-24 text-white lg:px-10 lg:py-32">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1fr_1fr] lg:items-end">
+          <div><p className="text-xs uppercase tracking-[0.3em] text-white/40">Ready when you are</p><h2 className="mt-7 max-w-3xl font-serif text-5xl leading-tight sm:text-7xl">Make {destination.name} the next destination.</h2></div>
+          <div><p className="max-w-lg text-lg leading-8 text-white/60">Tell us what you are considering. You do not need every detail figured out before reaching out.</p><Link href={`/enquire?type=destination&slug=${slug}`} className="mt-8 inline-flex rounded-full bg-white px-7 py-4 text-sm font-medium text-slate-950">Plan a trip to {destination.name} <span className="ml-6">↗</span></Link></div>
+        </div>
+      </section>
     </main>
   );
 }
