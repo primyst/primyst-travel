@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { motion } from 'framer-motion';
 
 const context: Record<string, Record<string, { label: string; title: string; description: string }>> = {
@@ -24,7 +25,7 @@ const context: Record<string, Record<string, { label: string; title: string; des
   },
 };
 
-export default function EnquirePage() {
+function EnquireContent() {
   const searchParams = useSearchParams();
   const type = searchParams.get('type') || 'general';
   const slug = searchParams.get('slug') || '';
@@ -42,11 +43,7 @@ export default function EnquirePage() {
     payload.slug = selected ? slug : '';
 
     try {
-      const response = await fetch('/api/enquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetch('/api/enquiries', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error || 'Something went wrong.');
       setStatus('success');
@@ -68,4 +65,8 @@ export default function EnquirePage() {
       </section>
     </main>
   );
+}
+
+export default function EnquirePage() {
+  return <Suspense fallback={<main className="grid min-h-screen place-items-center bg-[#f5f4ef] text-slate-500">Loading enquiry…</main>}><EnquireContent /></Suspense>;
 }
