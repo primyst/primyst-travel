@@ -16,6 +16,16 @@ export const enquiryContext = {
     london: 'A trip to London',
     paris: 'A trip to Paris',
     'cape-town': 'A trip to Cape Town',
+    istanbul: 'A trip to Istanbul',
+    maldives: 'A trip to the Maldives',
+    tokyo: 'A trip to Tokyo',
+    'new-york': 'A trip to New York',
+    rome: 'A trip to Rome',
+    marrakech: 'A trip to Marrakech',
+    reykjavik: 'A trip to Reykjavik',
+    zanzibar: 'A trip to Zanzibar',
+    bali: 'A trip to Bali',
+    santorini: 'A trip to Santorini',
   },
 } as const;
 
