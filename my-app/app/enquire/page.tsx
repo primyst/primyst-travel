@@ -1,9 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
 import { motion } from 'framer-motion';
 
 const context: Record<string, Record<string, { label: string; title: string; description: string }>> = {
@@ -22,6 +21,16 @@ const context: Record<string, Record<string, { label: string; title: string; des
     london: { label: 'Trip enquiry', title: 'A trip to London', description: 'Tell us a little about the journey you are considering.' },
     paris: { label: 'Trip enquiry', title: 'A trip to Paris', description: 'Tell us a little about the journey you are considering.' },
     'cape-town': { label: 'Trip enquiry', title: 'A trip to Cape Town', description: 'Tell us a little about the journey you are considering.' },
+    istanbul: { label: 'Trip enquiry', title: 'A trip to Istanbul', description: 'Tell us a little about the journey you are considering.' },
+    maldives: { label: 'Trip enquiry', title: 'A trip to the Maldives', description: 'Tell us a little about the journey you are considering.' },
+    tokyo: { label: 'Trip enquiry', title: 'A trip to Tokyo', description: 'Tell us a little about the journey you are considering.' },
+    'new-york': { label: 'Trip enquiry', title: 'A trip to New York', description: 'Tell us a little about the journey you are considering.' },
+    rome: { label: 'Trip enquiry', title: 'A trip to Rome', description: 'Tell us a little about the journey you are considering.' },
+    marrakech: { label: 'Trip enquiry', title: 'A trip to Marrakech', description: 'Tell us a little about the journey you are considering.' },
+    reykjavik: { label: 'Trip enquiry', title: 'A trip to Reykjavik', description: 'Tell us a little about the journey you are considering.' },
+    zanzibar: { label: 'Trip enquiry', title: 'A trip to Zanzibar', description: 'Tell us a little about the journey you are considering.' },
+    bali: { label: 'Trip enquiry', title: 'A trip to Bali', description: 'Tell us a little about the journey you are considering.' },
+    santorini: { label: 'Trip enquiry', title: 'A trip to Santorini', description: 'Tell us a little about the journey you are considering.' },
   },
 };
 
@@ -68,5 +77,5 @@ function EnquireContent() {
 }
 
 export default function EnquirePage() {
-  return <Suspense fallback={<main className="grid min-h-screen place-items-center bg-[#f5f4ef] text-slate-500">Loading enquiry…</main>}><EnquireContent /></Suspense>;
+  return <Suspense fallback={<main className="grid min-h-screen place-items-center bg-[#f4f1e9] text-slate-500">Loading enquiry…</main>}><EnquireContent /></Suspense>;
 }
