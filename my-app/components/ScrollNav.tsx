@@ -23,7 +23,7 @@ export default function ScrollNav() {
     { href: "/destinations", label: "Destinations" },
     { href: "/packages", label: "Journeys" },
     { href: "/events", label: "Events" },
-    { href: "/journal", label: "Journal" },
+    { href: "/blog", label: "Blog" },
     { href: "/about", label: "About" },
   ];
 
@@ -73,19 +73,38 @@ export default function ScrollNav() {
           Contact
         </Link>
 
-        {/* Mobile menu toggle — so small screens get more than just Contact */}
+        {/* Mobile menu toggle — animated hamburger that morphs into an X */}
         <button
           onClick={() => setMenuOpen((v) => !v)}
           aria-label="Toggle menu"
-          className={`flex h-9 w-9 items-center justify-center rounded-full border transition md:hidden ${
-            solid
-              ? "border-[#181611]/30 text-[#181611]"
-              : "border-white/40 text-white"
+          className={`flex h-9 w-9 items-center justify-center rounded-full transition md:hidden ${
+            solid ? "text-[#181611]" : "text-white"
           }`}
         >
-          <div className="flex flex-col gap-[3px]">
-            <span className="h-[1.5px] w-4 bg-current" />
-            <span className="h-[1.5px] w-4 bg-current" />
+          <div className="relative flex h-3.5 w-4 flex-col justify-between">
+            <motion.span
+              className="h-[1.5px] w-full origin-center bg-current"
+              animate={
+                menuOpen
+                  ? { rotate: 45, y: 6.5 }
+                  : { rotate: 0, y: 0 }
+              }
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            />
+            <motion.span
+              className="h-[1.5px] w-full bg-current"
+              animate={{ opacity: menuOpen ? 0 : 1 }}
+              transition={{ duration: 0.2 }}
+            />
+            <motion.span
+              className="h-[1.5px] w-full origin-center bg-current"
+              animate={
+                menuOpen
+                  ? { rotate: -45, y: -6.5 }
+                  : { rotate: 0, y: 0 }
+              }
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            />
           </div>
         </button>
       </div>
